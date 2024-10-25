@@ -1,0 +1,27 @@
+{
+  "module": {
+    "name": "common",
+    "type": "feature",
+    "description": "$string:module_desc",
+    "mainElement": "CommonAbility",
+    "deviceTypes": [
+      "phone",
+      "tablet"
+    ],
+    "deliveryWithInstall": true,
+    "installationFree": false,
+    "pages": "$profile:main_pages",
+    "abilities": [
+      {
+        "name": "CommonAbility",
+        "srcEntry": "./ets/commonability/CommonAbility.ets",
+        "description": "$string:CommonAbility_desc",
+        "icon": "$media:layered_image",
+        "label": "$string:CommonAbility_label",
+        "startWindowIcon": "$media:startIcon",
+        "startWindowBackground": "$color:start_window_background",
+        "exported": true
+      }
+    ]
+  }
+}

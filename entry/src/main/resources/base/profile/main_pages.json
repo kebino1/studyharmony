@@ -1,0 +1,21 @@
+{
+  "src": [
+    "pages/Index",
+    "pages/Login",
+    "pages/TestPage",
+    "pages/Main",
+    "pages/SignPage",
+    "pages/ClassPage",
+    "pages/LayoutPage",
+    "pages/LoginPage",
+    "pages/GoodsItemPage",
+    "pages/WelcomePage",
+    "pages/FlexDemoPage",
+    "pages/SwiperPage",
+    "pages/RegisterPage",
+    "pages/ListPage",
+    "pages/AxiosDemoPage",
+    "pages/TabPage",
+    "pages/StudyUI"
+  ]
+}
