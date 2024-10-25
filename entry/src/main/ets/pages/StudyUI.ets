@@ -52,12 +52,22 @@ struct StudyUI {
       // textInputItem()
       // svgItem()
       // demo1()
-      borderItem()
+      // borderItem()
+      // borderRadiusItem()
+      // circleItem()
+      // backgroundItem()
+      // linearlayouItem()
+      // titleBar()
+      // dewuAppItem()
+      // weightItem()
+      cardItem()
     }
-    // .backgroundColor('#ffdbd9d7')
+
+    .backgroundColor('#ffdbd9d7')
     // .borderRadius(5)
-    .padding(10)
+    .padding(5)
     .width('100%')
+    .height('100%')
 
   }
 }
@@ -144,6 +154,124 @@ function borderItem() {
   }
 }
 
+/**
+ * 设置组件圆角 borderRadius
+ */
+@Builder
+function borderRadiusItem() {
+  Column() {
+    Text('边框圆角')
+      .padding(10)
+      .backgroundColor(Color.Orange)
+      .fontColor(Color.Yellow)
+      .border({
+        width:2,
+        color:'#ff99ee11'
+      })
+      .borderRadius({
+        topLeft:20
+      })
+  }
+}
+
+/**
+ * 设置正圆
+ * 组件宽高要相等（正方形），borderRadius设置圆角大小为宽或高度的一半
+ *
+ * 设置胶囊按钮
+ * 一般宽度比高度大，borderRadius设置圆角大小为宽高中最小那个的一半
+ */
+@Builder
+function circleItem() {
+  Column() {
+    Text('正圆')
+      .padding(10)
+      .textAlign(TextAlign.Center)
+      .backgroundColor(Color.Orange)
+      .fontColor(Color.Gray)
+      .border({
+        width:2,
+        color:'#ff99ee11'
+      })
+      // .borderRadius(50) //正圆 大小为宽高一半
+      // .width(100)
+      // .height(100)
+
+      .borderRadius(25) //胶囊 这里是高度的一半
+      .width(100)
+      .height(50)
+  }
+}
+
+/**
+ * 设置背景 backgroundImage
+ * 组件中的宽高单位是vp vp是虚拟单位，基于设置自动转换，保证视觉效果一致 px是像素单位，不设置时默认单位是vp
+ * vp转px：vp2px(数值)
+ */
+@Builder
+function backgroundItem() {
+  Column() {
+
+  }
+  //第二个参数可选，是设置图片平铺方式 x 水平平铺 y垂直平铺 xy水平垂直平铺
+  // .backgroundImage($r('app.media.app_icon'), ImageRepeat.XY)
+  .backgroundImage($r('app.media.ban3'))
+  //设置背景图片位置
+  .backgroundImagePosition(Alignment.Center)
+  //设置背景图片缩放方式
+  .backgroundImageSize(ImageSize.Cover)
+  .backgroundColor(Color.Orange)
+  .width('100%')
+  .height('40%')
+}
+
+/**
+ * 线性布局
+ * column 列
+ * row 行
+ * justifyContent: 主轴排列方式 column布局就是y轴 row布局就是x轴
+ * alignItems:交叉轴对齐方式
+ */
+@Builder
+function linearlayouItem() {
+  Column({space: 50}) {
+    Text('项目1')
+      .backgroundColor(Color.Yellow)
+    Text('项目2')
+      .backgroundColor(Color.Yellow)
+    Text('项目3')
+      .backgroundColor(Color.Yellow)
+    Text('项目4')
+      .backgroundColor(Color.Yellow)
+  }
+  .justifyContent(FlexAlign.Start)
+  .height('100%')
+}
+
+/**
+ *  自定义伸缩
+ * 类似Android linearlayout的权重
+ * 给组件设置.layoutWeight(数值)，其中数值指占的比重
+ */
+@Builder
+function weightItem() {
+  Row() {
+    Text('项目1')
+      .layoutWeight(1)
+      .backgroundColor(Color.Yellow)
+    Text('项目2')
+      .layoutWeight(2)
+      .backgroundColor(Color.Blue)
+    Text('项目3')
+      .backgroundColor(Color.Pink)
+    Text('项目4')
+      .backgroundColor(Color.Yellow)
+  }
+  .justifyContent(FlexAlign.Start)
+  .width('100%')
+}
+
+
 @Builder
 function demo1() {
   Column() {
@@ -174,4 +302,123 @@ function demo1() {
       .fontSize(18)
       .backgroundColor('#a1a1a1')
   }
+}
+
+/**
+ * dmeo:标题栏
+ */
+@Builder
+function titleBar() {
+  Row() {
+    Image($r('app.media.ic_public_arrow_left'))
+      .width(24)
+      .fillColor(Color.White)
+
+    Text('个人中心')
+      .fontColor(Color.White)
+
+    Image($r('app.media.ic_gallery_collage'))
+      .width(24)
+      .fillColor(Color.White)
+  }
+  .backgroundColor('#445566')
+  .padding(5)
+  .height(48)
+  .width('100%')
+  .justifyContent(FlexAlign.SpaceBetween)
+}
+
+/**
+ * dmeo:得物app列表
+ */
+@Builder
+function dewuAppItem() {
+  Row() {
+    Column({space:10}) {
+      Text('玩一玩')
+        .fontSize(20)
+        .fontWeight(FontWeight.Bold)
+      Row() {
+        Text('签到兑礼')
+          .fontColor(Color.Gray)
+        Text(' | ')
+          .fontColor(Color.Gray)
+        Text('超多大奖 超好玩')
+          .fontColor(Color.Gray)
+      }
+    }
+    .alignItems(HorizontalAlign.Start)
+
+    Row(){
+      Image($r('app.media.maozhuxi'))
+        .height(40)
+
+      Image($r('app.media.ic_public_arrow_left'))
+        .width(24)
+        .rotate({angle:180})
+    }
+
+
+  }
+  .backgroundColor(Color.White)
+  .padding({
+    left:10,
+    top:20,
+    right:10,
+    bottom:20
+  })
+  .borderRadius(5)
+  .width('100%')
+  .justifyContent(FlexAlign.SpaceBetween)
+}
+
+/**
+ * dmeo:卡片效果
+ */
+@Builder
+function cardItem() {
+  Column({space:10}) {
+    Image($r('app.media.freedom'))
+      .borderRadius({
+        topLeft: 10,
+        topRight: 10
+      })
+      .padding(5)
+      .width('100%')
+
+    Text('草天草地草空气，“史上最强？”帅掉渣的强袭自由')
+      .align(Alignment.Start)
+      .fontSize(20)
+      .fontWeight(FontWeight.Bold)
+      .fontColor('#333')
+      .lineHeight(35)
+      .padding({left:2, right:2})
+
+    Row() {
+      Row({space:5}) {
+        Image($r('app.media.maozhuxi'))
+          .width(40)
+          .height(40)
+          .borderRadius(20)
+
+        Text('橡胶佬集中地')
+          .fontColor('#999')
+      }
+      .layoutWeight(1)
+
+      Row({space:5}) {
+        Image($r('app.media.ic_gallery_collage'))
+          .width(20)
+          .fillColor('#999')
+
+        Text('1000')
+          .fontSize(12)
+          .fontColor('#999')
+      }
+    }
+    .padding(10)
+  }
+  .borderRadius(5)
+  .backgroundColor(Color.White)
+  .width(300)
 }
