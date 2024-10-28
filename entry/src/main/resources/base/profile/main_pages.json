@@ -17,6 +17,7 @@
     "pages/AxiosDemoPage",
     "pages/TabPage",
     "pages/StudyUI",
-    "pages/DuliaoLoginPage"
+    "pages/DuliaoLoginPage",
+    "pages/ShopCarPage"
   ]
 }

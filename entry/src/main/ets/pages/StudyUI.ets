@@ -4,6 +4,9 @@
 @Component
 struct StudyUI {
   @State message: string = 'hello world'
+  @State numStr: number = 999
+  @State colorState: string = '#999999'
+  isSelect: boolean = false
 
   build() {
     // Column({space: 10}) {
@@ -60,7 +63,15 @@ struct StudyUI {
       // titleBar()
       // dewuAppItem()
       // weightItem()
-      cardItem()
+      // cardItem()
+      // flexItem()
+      // positionItem()
+      // hotCardDemo()
+      // stackItem()
+      videoDemo()
+      // alipayDemo()
+      // stateDemo(this.numStr)
+      // changeTextDemo()
     }
 
     .backgroundColor('#ffdbd9d7')
@@ -75,8 +86,9 @@ struct StudyUI {
 /**
  * 学习text相关内容
  * 文本溢出行数省略号
- * 行高
- * 跑马灯
+ * 行高：lineHeight
+ * 跑马灯：
+ *     .textOverflow({overflow: TextOverflow.Ellipsis}) //TextOverflow.MARQUEE 为跑马灯效果，maxLines属性就无效了
  */
 @Builder
 function textItem() {
@@ -271,6 +283,432 @@ function weightItem() {
   .width('100%')
 }
 
+/**
+ * 弹性布局 Flex
+ */
+@Builder
+function flexItem() {
+  //默认布局和row相同 水平排列,可以通过direction设置水平还是垂直排列
+  //wrap：Wrap多行布局  NoWrap单行布局
+  Flex({wrap:FlexWrap.Wrap,
+  }) {
+    Text('第一项')
+      .padding(5)
+      .margin(5)
+      .backgroundColor('#558877')
+      .borderWidth(1)
+    Text('第二项')
+      .padding(5)
+      .margin(5)
+      .backgroundColor('#558877')
+      .borderWidth(1)
+    Text('冯')
+      .padding(5)
+      .margin(5)
+      .backgroundColor('#558877')
+      .borderWidth(1)
+    Text('第四项')
+      .padding(5)
+      .margin(5)
+      .backgroundColor('#558877')
+      .borderWidth(1)
+    Text('这个是什么')
+      .padding(5)
+      .margin(5)
+      .backgroundColor('#558877')
+      .borderWidth(1)
+    Text('我是东方红啊')
+      .padding(5)
+      .margin(5)
+      .backgroundColor('#558877')
+      .borderWidth(1)
+  }
+}
+
+/**
+ * 绝对定位：position
+ *  .position({x:0, y:0}) xy是相对于父控件左顶点的坐标
+ * 绝对定位后，不再占用自身原有位置
+ */
+@Builder
+function positionItem() {
+  Column() {
+    Text('第一项')
+      .padding(5)
+      .margin(5)
+      .backgroundColor('#558877')
+      .borderWidth(1)
+    Text('第二项')
+      .padding(5)
+      .margin(5)
+      .backgroundColor('#558877')
+      .borderWidth(1)
+    //后面的组件层级更高，会盖住前面的组件
+    //需求：在不改动原有结果下，调整组件层级 .zIndex(数字)
+    Image($r('app.media.app_icon'))
+      .width(33)
+      .position({x:10, y:70})
+      .zIndex(-1)
+    Text('第23项')
+      .padding(5)
+      .margin(5)
+      .backgroundColor('#558877')
+      .borderWidth(1)
+  }
+}
+
+/**
+ * 层叠布局
+ */
+@Builder
+function stackItem() {
+  //alignContent:设置层叠位置
+  Stack({alignContent: Alignment.TopStart}) {
+    Text('爷爷')
+      .width(300)
+      .height(300)
+      .backgroundColor(Color.Yellow)
+
+    Text('爸爸')
+      .width(150)
+      .height(150)
+      .backgroundColor(Color.Blue)
+
+    Text('儿子')
+      .width(100)
+      .height(100)
+      .backgroundColor(Color.Green)
+  }
+  .backgroundColor(Color.Pink)
+  .width('100%')
+  .height('100%')
+}
+
+//==================================  demo  ==================================
+
+@Builder
+function demo12(colorState: string, isSelect: boolean, numStr: number) {
+  Column() {
+    Image($r('app.media.splash_main'))
+      .height(200)
+      .width(200)
+      .borderRadius({topLeft:10, topRight:10})
+
+    Text('美业新体验，智慧新美业，给美业赋能AI')
+      .width(200)
+      .padding(8)
+
+    Row() {
+      Row({space:5}) {
+        Image($r('app.media.app_icon'))
+          .width(20)
+
+        Text('嘟聊')
+          .fontColor('#999999')
+      }
+
+      Row({space:5}) {
+        Image($r('app.media.ic_public_favor'))
+          .width(20)
+          .fillColor(colorState)
+
+        Text(numStr.toString())
+          .fontColor(colorState)
+      }.onClick(() => {
+        isSelect = !isSelect
+        if (!isSelect) {
+          numStr--
+          colorState = '#999999'
+        } else {
+          numStr++
+          colorState = '#ff1100'
+        }
+      })
+    }
+    .padding(8)
+    .width(200)
+    .justifyContent(FlexAlign.SpaceBetween)
+  }
+  .backgroundColor(Color.White)
+}
+
+/**
+ * 动态修改文字和颜色
+ * @param numStr
+ */
+@Builder
+function changeTextDemo() {
+  Column() {
+    Image($r('app.media.splash_main'))
+      .height(200)
+      .width(200)
+      .borderRadius({topLeft:10, topRight:10})
+
+    Text('美业新体验，智慧新美业，给美业赋能AI')
+      .width(200)
+      .padding(8)
+
+    Row() {
+      Row({space:5}) {
+        Image($r('app.media.app_icon'))
+          .width(20)
+
+        Text('嘟聊')
+          .fontColor('#999999')
+      }
+
+      Row({space:5}) {
+        Image($r('app.media.ic_public_favor'))
+          .width(20)
+
+        Text('100')
+          .fontColor('#999999')
+      }
+    }
+    .padding(8)
+    .width(200)
+    .justifyContent(FlexAlign.SpaceBetween)
+  }
+  .backgroundColor(Color.White)
+}
+
+@Builder
+function stateDemo(numStr: number) {
+  Row() {
+    Button('-').onClick((event: ClickEvent) => {
+      numStr--
+    })
+      .width(80)
+      .height(80)
+      .fontSize(34)
+
+    Text(numStr.toString())
+      .width(80)
+      .height(80)
+      .textAlign(TextAlign.Center)
+      .fontSize(34)
+
+    Button('+').onClick((event: ClickEvent) => {
+      numStr++
+    })
+      .width(80)
+      .height(80)
+      .fontSize(34)
+  }
+}
+
+@Builder
+function alipayDemo() {
+  Stack({alignContent: Alignment.Bottom}) {
+    Stack({alignContent: Alignment.Top}) {
+      Row() {
+        Text('这是标题')
+          .fontColor(Color.White)
+      }
+      .width('100%')
+      .height(60)
+      .backgroundColor(Color.Blue)
+      .zIndex(1)
+
+      Scroll() {
+        Column({space:3}) {
+          Text('项目1')
+            .fontSize(18)
+            .borderWidth(5)
+            .height(150)
+
+          Text('项目1')
+            .fontSize(18)
+            .borderWidth(5)
+            .height(150)
+
+          Text('项目1')
+            .fontSize(18)
+            .borderWidth(5)
+            .height(150)
+
+          Text('项目1')
+            .fontSize(18)
+            .borderWidth(5)
+            .height(150)
+
+          Text('项目1')
+            .fontSize(18)
+            .borderWidth(5)
+            .height(150)
+
+          Text('项目1')
+            .fontSize(18)
+            .borderWidth(5)
+            .height(150)
+
+          Text('项目1')
+            .fontSize(18)
+            .borderWidth(5)
+            .height(150)
+        }
+        .width('100%')
+        .margin({top:60, bottom:50})
+      }
+    }
+    .width('100%')
+    .height('100%')
+
+    Row() {
+      Column() {
+        Image($r('app.media.tab_message_selected'))
+          .width(30)
+      }
+
+      Column() {
+        Image($r('app.media.tab_home_normal'))
+          .width(25)
+        Text('主页')
+          .fontSize(10)
+          .fontColor('#666')
+      }
+
+      Column() {
+        Image($r('app.media.tab_workbench_normal'))
+          .width(25)
+        Text('服务台')
+          .fontSize(10)
+          .fontColor('#666')
+      }
+
+      Column() {
+        Image($r('app.media.tab_bird_normal'))
+          .width(25)
+        Text('人才网')
+          .fontSize(10)
+          .fontColor('#666')
+      }
+
+      Column() {
+        Image($r('app.media.tab_addressbook_normal'))
+          .width(25)
+        Text('通讯录')
+          .fontSize(10)
+          .fontColor('#666')
+      }
+    }
+    .justifyContent(FlexAlign.SpaceAround)
+    .backgroundColor(Color.White)
+    .width('100%')
+    .height(50)
+  }
+  .width('100%')
+  .height('100%')
+  .backgroundColor(Color.Pink)
+}
+
+@Builder
+function videoDemo() {
+  Column() {
+    Stack({alignContent: Alignment.Bottom}) {
+      Image($r('app.media.splash_main'))
+        .height(125)
+        .width('100%')
+        .borderRadius({topLeft:10, topRight:10})
+
+      Row() {
+        Row() {
+          Image($r('app.media.ic_common'))
+            .width(13)
+            .fillColor(Color.White)
+
+          Text('1000万')
+            .fontSize(12)
+            .fontColor(Color.White)
+        }
+
+        Row() {
+          Image($r('app.media.ic_common'))
+            .width(13)
+            .fillColor(Color.White)
+
+          Text('1000')
+            .fontSize(12)
+            .fontColor(Color.White)
+        }.padding({left:5, right:5})
+
+        Blank()
+
+        Text('11:00')
+          .fontSize(12)
+          .fontColor(Color.White)
+      }
+      .width('100%')
+      .padding(8)
+    }
+
+    Text('【嘟聊开发】一个应用通常会包含多种功能，将不同的功能特性按模块来划分和管理是一种良好的设计方式。在开发过程中，我们可以将每个功能模块作为一个独立的Module进行开发，Module中可以包含源代码、资源文件、第三方库、配置文件等，每一个Module可以独立编译，实现特定的功能')
+      .textOverflow({overflow: TextOverflow.Ellipsis})
+      .maxLines(2)
+      .margin(5)
+      .fontSize(14)
+      .layoutWeight(1)
+
+    Row() {
+      Text('100万点赞')
+        .fontSize(12)
+        .fontColor('#ffefaa20')
+
+      Image($r('app.media.ic_gallery_collage'))
+        .width(15)
+        .fillColor('#666')
+    }
+    .width('100%')
+    .justifyContent(FlexAlign.SpaceBetween)
+    .padding({left:10, right:10, bottom:10})
+
+  }
+  .backgroundColor(Color.White)
+  .borderRadius(10)
+  .margin({top:10})
+  .width(200)
+  .height(200)
+}
+
+@Builder
+function hotCardDemo() {
+  Column(){
+    Text('VIP')
+      .position({x:0,y:0})
+      .zIndex(666)
+      .backgroundColor('#fff18423')
+      .width(40)
+      .height(20)
+      .border({width:2, color:Color.White})
+      .borderRadius({topLeft:10, bottomRight:10})
+      .fontColor(Color.White)
+      .fontSize(12)
+      .fontWeight(700)
+      .fontStyle(FontStyle.Italic)
+      .textAlign(TextAlign.Center)
+
+    Image($r('app.media.ban1'))
+      .width('100%').height(210)
+      .borderRadius(10)
+
+    Row() {
+      Image($r('app.media.app_icon'))
+        .width(20)
+        .margin({right:5})
+
+      Text('嘟聊提供')
+        .fontSize(14)
+    }
+    .padding({left:8})
+    .width('100%')
+    .height(30)
+
+  }
+  .borderRadius(10)
+  .backgroundColor(Color.White)
+  .width(160)
+  .height(240)
+}
 
 @Builder
 function demo1() {

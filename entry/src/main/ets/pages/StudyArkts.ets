@@ -87,9 +87,49 @@ console.log('kebi', currentColor)
 @Entry
 @Component
 struct study {
+  //定义在组件内的变量和状态变量，不需要let修饰，
+  @State message:string = 'hello world'
   build() {
-    Text('学习ArkTS语法').onClick(() => {
+    Text(this.message).onClick(() => {
+      //访问组件内变量时，需要用this
+      this.message = '你好 世界'
       println('ceshi')
     }).fontWeight(FontWeight.Bold)
   }
 }
+
+/**
+ * 字符串拼接
+ * 使用+号拼接，只要有一个是字符串，那么+号就是拼接字符串
+ */
+let name = 'kebi'
+let message = '最有价值球员'
+console.log('kebi', name+message);
+
+/**
+ * 字符串模板
+ * 使用反引号： ``
+ */
+let position = 2
+console.log('kebi', `这是第${position}个`);
+
+/**
+ * 类型转换
+ * 字符串转数字
+ * Number(numStr):直接转数字，如果不是数字，返回NaN
+ * parseInt():保留整数，去掉小数，开头如果不是数字，返回NaN
+ * parseFloat():保留小数，开头如果不是数字，返回NaN
+ */
+let numStr = '2.5a'
+let num = Number(numStr)
+console.log('kebi', `字符串转数字:${num}}`);
+
+/**
+ * 类型转换
+ * 数字转字符串
+ * toString:直
+ * toFixed(保留小数个数):保留小数个数，四舍五入
+ */
+let num1 = 2
+let numStr1 = num1.toFixed(2)
+console.log('kebi', `字符串转数字:${numStr1}`);
