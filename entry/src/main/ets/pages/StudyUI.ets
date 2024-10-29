@@ -1,4 +1,4 @@
-
+import { Person } from './StudyArkts'
 
 @Entry
 @Component
@@ -7,6 +7,13 @@ struct StudyUI {
   @State numStr: number = 999
   @State colorState: string = '#999999'
   isSelect: boolean = false
+  titles: string[] = ['鞋子', '衣服', '裤子', '帽子', '裙子']
+  persons: Person[] = [
+    {name: '葫芦娃', age: 8, eat:() => {}},
+    {name: '火影', age: 8, eat:() => {}},
+    {name: '孙悟空', age: 8, eat:() => {}},
+    {name: '死神', age: 8, eat:() => {}}
+  ]
 
   build() {
     // Column({space: 10}) {
@@ -68,10 +75,13 @@ struct StudyUI {
       // positionItem()
       // hotCardDemo()
       // stackItem()
-      videoDemo()
+      // videoDemo()
       // alipayDemo()
       // stateDemo(this.numStr)
       // changeTextDemo()
+      // visiableShopCarDemo(0)
+      // ForEachItem(this.persons)
+      BadgeItem()
     }
 
     .backgroundColor('#ffdbd9d7')
@@ -384,7 +394,160 @@ function stackItem() {
   .height('100%')
 }
 
+/**
+ * 渲染控制=foreach
+ * @param titles
+ */
+@Builder
+function ForEachItem(titles: Person[]) {
+  Scroll() {
+    Column() {
+      ForEach(titles, (item:Person, index) => {
+        Column({space:15}) {
+          Text(`这是获取了第${index+1}个选项，项目是：${item.name}`)
+          Text('2024年10月29日15:49:05')
+            .fontSize(14)
+            .fontColor(Color.Gray)
+        }
+        .width('100%')
+        .alignItems(HorizontalAlign.Start)
+        .padding(10)
+      })
+    }
+  }
+}
+
+/**
+ * 角标=Badge
+ */
+@Builder
+function BadgeItem() {
+  Column() {
+    Grid() {
+      ForEach(['app.media.ban1','app.media.ban2','app.media.ban3','app.media.ban1','app.media.ban3','app.media.ban1'], (item:string, index)=> {
+        GridItem() {
+          Badge({
+            count:1,
+            maxCount:99,
+            //角标位置
+            position: BadgePosition.RightTop,
+            style: {
+              //角标文字大小
+              fontSize:12,
+              //圆形大小
+              badgeSize:16,
+              //背景颜色
+              badgeColor:Color.Red
+            }
+          }) {
+            Image($r(item))
+              .width(100)
+              .margin(8)
+          }
+        }
+      })
+
+
+    }.width('100%')
+    .height(500)
+    .columnsTemplate('1fr 1fr 1fr')
+    .rowsTemplate('1fr 1fr')
+
+    Button('立即抽卡').onClick((event: ClickEvent) => {
+
+    })
+
+
+    // Badge({
+    //   count:1,
+    //   maxCount:99,
+    //   //角标位置
+    //   position: BadgePosition.RightTop,
+    //   style: {
+    //     //角标文字大小
+    //     fontSize:12,
+    //     //圆形大小
+    //     badgeSize:16,
+    //     //背景颜色
+    //     badgeColor:Color.Red
+    //   }
+    // }) {
+    //   Image($r('app.media.ban1'))
+    //     .width(100)
+    //     .margin(10)
+    // }
+    //
+    // Badge({
+    //   count:1,
+    //   maxCount:99,
+    //   //角标位置
+    //   position: BadgePosition.RightTop,
+    //   style: {
+    //     //角标文字大小
+    //     fontSize:12,
+    //     //圆形大小
+    //     badgeSize:16,
+    //     //背景颜色
+    //     badgeColor:Color.Red
+    //   }
+    // }) {
+    //   Image($r('app.media.ban2'))
+    //     .width(100)
+    // }
+  }
+}
+
 //==================================  demo  ==================================
+
+@Builder
+function visiableShopCarDemo(count: number) {
+  Row() {
+    Column() {
+      Image($r('app.media.ic_gallery_collage'))
+        .width(25)
+
+      Text('店铺')
+    }
+
+    Column() {
+      Image($r('app.media.ic_gallery_collage'))
+        .width(25)
+
+      Text('客服')
+    }
+
+    Column() {
+      Image($r('app.media.ic_gallery_collage'))
+        .width(25)
+
+      Text('购物车')
+    }
+
+    if (count > 0) {
+      Button('加入购物车').onClick((event: ClickEvent) => {
+
+      })
+        .fontColor(Color.White)
+        .backgroundColor('#ffeacb08')
+      Button('立即购买').onClick((event: ClickEvent) => {
+
+      })
+        .fontColor(Color.White)
+        .backgroundColor(Color.Red)
+    } else {
+      Button('查看类似商品').onClick((event: ClickEvent) => {
+
+      })
+        .fontColor(Color.White)
+        .backgroundColor('#ffeacb08')
+    }
+
+  }
+  .padding(10)
+  .width('100%')
+  .alignItems(VerticalAlign.Bottom)
+  .justifyContent(FlexAlign.SpaceBetween)
+}
 
 @Builder
 function demo12(colorState: string, isSelect: boolean, numStr: number) {
@@ -651,6 +814,8 @@ function videoDemo() {
 
     Row() {
       Text('100万点赞')
+        //添加上中下划线
+        .decoration({type: TextDecorationType.Underline})
         .fontSize(12)
         .fontColor('#ffefaa20')
 

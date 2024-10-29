@@ -17,10 +17,12 @@ struct ShopCarPage {
         Column() {
           Text('万代hg强袭自由高达')
             .fontSize(16)
-
+            .textOverflow({overflow: TextOverflow.Ellipsis})
+            .maxLines(2)
 
           Text('万代南梦宫')
             .fontSize(14)
+            .fontColor(Color.Gray)
 
           Row() {
             Row() {
@@ -29,6 +31,8 @@ struct ShopCarPage {
               Text(`￥${this.oldPrice}`)
                 .lineBreakStrategy(LineBreakStrategy.HIGH_QUALITY)
                 .fontSize(12)
+                .fontColor(Color.Gray)
+                //装饰 添加中划线
                 .decoration({type:TextDecorationType.LineThrough})
             }
 
@@ -44,7 +48,7 @@ struct ShopCarPage {
                   this.count--
                 })
               Text(this.count.toString())
-                .width(25)
+                .width(30)
                 .textAlign(TextAlign.Center)
                 .border({ width: { right: 1 }, color: Color.Gray })
               Text('+')
@@ -54,7 +58,7 @@ struct ShopCarPage {
                   this.count++
                 })
             }
-            .border({ width: 1, color: Color.Gray })
+            .border({ width: 1, color: Color.Gray , radius:5})
           }.width('90%').justifyContent(FlexAlign.SpaceBetween)
 
         }
@@ -63,6 +67,9 @@ struct ShopCarPage {
         .alignItems(HorizontalAlign.Start)
         .justifyContent(FlexAlign.SpaceBetween)
       }
+      .backgroundColor(Color.White)
+      .borderRadius(5)
+      .margin(5)
       .width('100%')
       .padding(10)
 
@@ -80,13 +87,12 @@ struct ShopCarPage {
               .fontSize(20)
           }
 
-          Text(`共减￥${(this.oldPrice * this.count - this.price * this.count).toFixed(2)}`)
+          Text(`共减￥${((this.oldPrice - this.price) * this.count).toFixed(2)}`)
             .fontColor(Color.Red)
             .fontSize(16)
         }.alignItems(HorizontalAlign.End)
 
         Button('结算支付').onClick((event: ClickEvent) => {
-
         })
           .margin(10)
           .backgroundColor('#ffe5ba1f')

@@ -2,6 +2,7 @@
  * 学习ArkTS语法
  */
 import HashMap from '@ohos.util.HashMap'
+import { JSON } from '@kit.ArkTS'
 
 //基本类型 string(字符串) number(数字) boolean(布尔值)
 //变量 let
@@ -18,7 +19,27 @@ const PI: number = 3.14
 //取值 数组名[索引]
 let datas: string[] = ['1', 'xiaomi', 'huawei']
 let phones: Array<string> = ['iphone', 'xiaomi', 'huawei']
-datas[0]
+//查
+let data = datas[0]
+//改
+datas[1] = 'ff'
+//增 .unshift：往开头加  push：往结尾加 2种添加方法会返回添加后数组长度
+datas.unshift('往开头加')
+datas.push('很好..')
+//删  shift:从开头开始删  pop:从结尾开始删  2种删除方法返回删除项
+//开头开始删
+datas.shift()
+//结尾开始删
+datas.pop()
+
+//任意位置删除/增加元素 splice(起始位置，删除个数，新增元素1,2,3...)
+datas.splice(1,0, '新增的袁术')
+
+// console.log('kebi',`数组长度`+datas.length)
+console.log('kebi',`删除项`+datas.pop())
+for (let i = 0;i < datas.length;i++) {
+  console.log('kebi',`遍历数组：${datas[i]}`)
+}
 
 //函数
 /**
@@ -49,7 +70,7 @@ let request = (message: string) => {
 
 //对象
 //1、定义接口
-interface Person {
+export interface Person {
   name: string
   age: number
   sex?: boolean
@@ -93,7 +114,7 @@ struct study {
     Text(this.message).onClick(() => {
       //访问组件内变量时，需要用this
       this.message = '你好 世界'
-      println('ceshi')
+      console.log('kebi', this.message);
     }).fontWeight(FontWeight.Bold)
   }
 }
@@ -133,3 +154,64 @@ console.log('kebi', `字符串转数字:${num}}`);
 let num1 = 2
 let numStr1 = num1.toFixed(2)
 console.log('kebi', `字符串转数字:${numStr1}`);
+
+/**
+ * 语句
+ */
+//if分支语句
+let isStudent = false
+if (isStudent) {
+  console.log('kebi', `是学生`);
+} else {
+  console.log('kebi', `不是学生`);
+}
+
+//循环语句 while
+// let firstNum = 1;
+// let total = 0;
+// while (firstNum < 101) {
+//   total += firstNum
+//   firstNum++
+//   if (firstNum % 2 == 0) {
+//     console.log('kebi', `1到100偶数：${firstNum}`);
+//   }
+// }
+// console.log('kebi', `1到100累加和：${total}`);
+
+//for 循环
+/*
+for(let i = 1; i < 100; i++) {
+
+}*/
+
+
+/*
+let arra = [10,1,4,-5,-100,25]
+let finalArray: number[] = []
+for (let item of arra) {
+    if (item > 0) {
+      finalArray.push(item)
+    }
+}
+console.log('kebi', `${finalArray}`);*/
+
+
+//对象数组
+//接口
+interface Student{
+  stuId: number,
+  name: string
+}
+
+let students: Student[] = [
+  {stuId:1, name :'kebi'},
+  {stuId:2, name :'vip'},
+  {stuId:3, name :'hello'}
+]
+
+//包括对象的复杂数据，要在日志中打印，需要调用JSON.stringify(复杂类型)，转成字符串
+// console.log('kebi', JSON.stringify(students[1]));
+
+//forEach 渲染控制
+//forEach(数组, (item:数组的类型， index: number) => {
+// })

@@ -16,8 +16,10 @@
     "pages/ListPage",
     "pages/AxiosDemoPage",
     "pages/TabPage",
+    "pages/StudyArkts",
     "pages/StudyUI",
     "pages/DuliaoLoginPage",
-    "pages/ShopCarPage"
+    "pages/ShopCarPage",
+    "pages/CollectCardPage"
   ]
 }
