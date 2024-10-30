@@ -15,6 +15,27 @@ struct StudyUI {
     {name: '死神', age: 8, eat:() => {}}
   ]
 
+  //scroll滑动控制器
+  myScroller: Scroller = new Scroller()
+
+  /**
+   * 在组件内设置通用样式
+   */
+  @Styles commonSize() {
+    .backgroundColor(Color.Pink)
+    .width(100)
+    .height(200)
+  }
+
+  /**
+   * 在组件内封装构建函数
+   */
+  @Builder commonCompose() {
+    Row() {
+      Text('你好'+this.message)
+    }
+  }
+
   build() {
     // Column({space: 10}) {
     //   Text('小说简介')
@@ -81,7 +102,9 @@ struct StudyUI {
       // changeTextDemo()
       // visiableShopCarDemo(0)
       // ForEachItem(this.persons)
-      BadgeItem()
+      // BadgeItem()
+      // SwiperDemo()
+      scrollItem(this.myScroller)
     }
 
     .backgroundColor('#ffdbd9d7')
@@ -450,7 +473,9 @@ function BadgeItem() {
 
     }.width('100%')
     .height(500)
+    //设置grid列分配比例
     .columnsTemplate('1fr 1fr 1fr')
+    //设置grid行分配比例
     .rowsTemplate('1fr 1fr')
 
     Button('立即抽卡').onClick((event: ClickEvent) => {
@@ -495,6 +520,117 @@ function BadgeItem() {
     //     .width(100)
     // }
   }
+}
+
+/**
+ * 轮播组件
+ */
+@Builder
+function SwiperDemo() {
+  //设置swipter
+  //设置宽高
+  //设置子组件
+  Swiper() {
+    Text('1')
+      .textExtend(Color.Green, '轮播图1')
+
+    Text('2')
+      .textExtend(Color.Brown, '轮播图2')
+    Text('3')
+      .textExtend(Color.Orange, '轮播图3')
+    Text('4')
+      .textExtend(Color.Pink, '轮播图4')
+  }
+  //设置宽高 子组件会自动拉伸
+  .width('100%')
+  //设置组件宽高比 为2.5
+  .aspectRatio(2.5)
+  .autoPlay(true)
+  .vertical(false)
+  //指示器 配置小圆点样式
+  .indicator(
+    Indicator.dot()
+      .itemWidth(20)
+      .itemHeight(10)
+      .color(Color.Gray)
+      .selectedItemWidth(30)
+      .selectedItemHeight(10)
+      .selectedColor(Color.White)
+  )
+}
+
+/**
+ * 装饰器
+ * @Extend 扩展组件(样式，事件)
+ *
+ * @Extend(组件名)
+ * function textExtend(参数) {
+ * .fontColor(Color.White)
+ * }
+ *
+ */
+@Extend(Text)
+function textExtend(color: ResourceColor, msg: string) {
+  .fontColor(Color.White)
+  .textAlign(TextAlign.Center)
+  .fontSize(18)
+  .backgroundColor(color)
+  .onClick(() => {
+    AlertDialog.show({
+      message: msg
+    })
+  })
+}
+
+/**
+ * @Styles 抽取通用属性 事件，可以在组件内定义
+ *
+ * @Styles
+ * function commonStyle() {
+ * .backgroundColor(Color.White)
+ * }
+ *
+ */
+@Styles
+function commonStyle() {
+  .backgroundColor(Color.White)
+}
+
+/**
+ * scroll  滚动布局
+ */
+@Builder
+function scrollItem(myScroller: Scroller) {
+
+  Scroll(myScroller) {
+    Column({space:5}) {
+      //遍历100次
+      ForEach(Array.from({length:100}), (item:number, index) => {
+        Text(`这是第${index+1}项`)
+          .backgroundColor('#ffe55e1a')
+          .textAlign(TextAlign.Center)
+          .fontColor(Color.White)
+          .fontSize(20)
+          .width('100%')
+          .height(100)
+          .border({radius:5})
+      })
+    }
+  }
+  //设置滚动方向
+  .scrollable(ScrollDirection.Vertical)
+  .height(300)
+  //开关滚动条
+  .scrollBar(BarState.Auto)
+  //设置滑动到顶部尾部后 回弹效果 阴影 弹簧...
+  .edgeEffect(EdgeEffect.Fade)
+
+  Button('返回头部').onClick(() => {
+    myScroller.scrollEdge(Edge.Bottom)
+  })
+    .margin(10)
+    .width('50%')
+    .backgroundColor('#ffcf9b17')
 }
 
 //==================================  demo  ==================================
