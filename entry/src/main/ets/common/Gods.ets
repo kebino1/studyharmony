@@ -5,6 +5,7 @@ export class Goods {
   date: string
   size: number
   address: string
+  food?: string
 
   //构造函数只能有一个
   constructor(name: string, price: number, date: string, size: number, address: string) {
@@ -82,3 +83,25 @@ export class DBHelper {
     return DBHelper.instance
   }
 }
+
+interface AnimationImpl {
+  name: string
+  duration: number
+  walk: () => void
+}
+
+class Animation{
+  name: string
+  duration: number
+  //仅可读，不能修改
+  readonly dec : string = "f"
+
+  //构造函数通过接口获取参数，在new对象时就不用按照固定顺序传参
+  constructor(params: AnimationImpl) {
+    this.name = params.name
+    this.duration = params.duration
+  }
+}
+
+let animation = new Animation({duration:1, name:"旋转", walk: ()=> {}})
+console.debug('kebi', animation.dec)

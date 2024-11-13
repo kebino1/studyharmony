@@ -20,6 +20,8 @@
     "pages/StudyUI",
     "pages/DuliaoLoginPage",
     "pages/ShopCarPage",
-    "pages/CollectCardPage"
+    "custom/CustomComponent",
+    "pages/CollectCardPage",
+    "custom/BuilderParamsPage"
   ]
 }

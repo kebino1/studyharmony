@@ -8,7 +8,7 @@ export  struct AxiosDemoPage {
 
   async request() {
     try {
-      const response :AxiosResponse = await axios.get<string, AxiosResponse<string>, null>('https://bmphone.dudugua.com/bmapp/call_back')
+      const response :AxiosResponse = await axios.get<string, AxiosResponse<string>, null>('https://im.dudugua.com/api/im/read')
       console.log('请求结果')
       console.log(JSON.stringify(response))
     } catch (error) {

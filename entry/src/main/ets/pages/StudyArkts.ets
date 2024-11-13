@@ -3,6 +3,14 @@
  */
 import HashMap from '@ohos.util.HashMap'
 import { JSON } from '@kit.ArkTS'
+//默认导入
+//找上一级 ../
+//同级目录 ./
+import person from '../common/module'
+//按需导入 有花括号
+import {uid, nickName as nick} from '../common/module'
+//全部导入 需要as起别名才能使用
+import * as module from '../common/module'
 
 //基本类型 string(字符串) number(数字) boolean(布尔值)
 //变量 let
@@ -166,6 +174,7 @@ if (isStudent) {
   console.log('kebi', `不是学生`);
 }
 
+
 //循环语句 while
 // let firstNum = 1;
 // let total = 0;
@@ -215,3 +224,38 @@ let students: Student[] = [
 //forEach 渲染控制
 //forEach(数组, (item:数组的类型， index: number) => {
 // })
+
+/**
+ * 泛型
+ */
+function testType<T>(params: T[]){
+  console.debug('kebi', params[params.length - 1])
+  console.debug('kebi', `这是module模块的uid:${uid}`)
+  let num: OnClickListener<number> = {
+    params: 0
+  }
+}
+
+testType<String>(["ni", 'hao'])
+
+/**
+ * 泛型接口
+ */
+interface OnClickListener<T> {
+  params: T
+}
+
+/**
+ * 泛型类
+ */
+class Car<T> {
+  brand: T
+
+  constructor(brand: T) {
+    this.brand = brand
+  }
+
+  getbrand(): T {
+    return this.brand
+  }
+}

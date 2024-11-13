@@ -15,6 +15,8 @@ struct StudyUI {
     {name: '死神', age: 8, eat:() => {}}
   ]
 
+  @State currentScrollPosition: number = 0
+
   //scroll滑动控制器
   myScroller: Scroller = new Scroller()
 
@@ -105,6 +107,7 @@ struct StudyUI {
       // BadgeItem()
       // SwiperDemo()
       scrollItem(this.myScroller)
+      // HelloComponent({color: Color.White})
     }
 
     .backgroundColor('#ffdbd9d7')
@@ -166,6 +169,7 @@ function textInputItem() {
   TextInput({placeholder: '请输入账号'})
     //输入类型
     .type(InputType.PhoneNumber)
+    .textOverflow(TextOverflow.Ellipsis)
 }
 
 /**
@@ -584,6 +588,7 @@ function textExtend(color: ResourceColor, msg: string) {
 
 /**
  * @Styles 抽取通用属性 事件，可以在组件内定义
+ * 定义的函数不支持传参
  *
  * @Styles
  * function commonStyle() {
@@ -602,28 +607,42 @@ function commonStyle() {
 @Builder
 function scrollItem(myScroller: Scroller) {
 
-  Scroll(myScroller) {
-    Column({space:5}) {
-      //遍历100次
-      ForEach(Array.from({length:100}), (item:number, index) => {
-        Text(`这是第${index+1}项`)
-          .backgroundColor('#ffe55e1a')
-          .textAlign(TextAlign.Center)
-          .fontColor(Color.White)
-          .fontSize(20)
-          .width('100%')
-          .height(100)
-          .border({radius:5})
-      })
+  Stack({alignContent: Alignment.BottomEnd}) {
+    Scroll(myScroller) {
+      Column({space:5}) {
+        //遍历100次
+        ForEach(Array.from({length:100}), (item:number, index) => {
+          Text(`这是第${index+1}项`)
+            .backgroundColor('#ffe55e1a')
+            .textAlign(TextAlign.Center)
+            .fontColor(Color.White)
+            .fontSize(20)
+            .width('100%')
+            .height(100)
+            .border({radius:5})
+        })
+      }
     }
+    //设置滚动方向
+    .scrollable(ScrollDirection.Vertical)
+    .height(500)
+    //开关滚动条
+    .scrollBar(BarState.Auto)
+    //设置滑动到顶部尾部后 回弹效果 阴影 弹簧...
+    .edgeEffect(EdgeEffect.Fade)
+    .onScroll((x,y) => {
+      console.debug(`旧滑动监听：x轴：${x}，y轴：${y}`)
+    })
+    .onWillScroll((x, y) => {
+      console.debug(`新滑动监听：x轴：${x}，y轴：${y}`)
+    })
+
+    Image($r('app.media.ic_to_top'))
+      .width(50)
+      .margin(20)
+      .fillColor('#ccead8d8')
   }
-  //设置滚动方向
-  .scrollable(ScrollDirection.Vertical)
-  .height(300)
-  //开关滚动条
-  .scrollBar(BarState.Auto)
-  //设置滑动到顶部尾部后 回弹效果 阴影 弹簧...
-  .edgeEffect(EdgeEffect.Fade)
+  .height(500)
 
   Button('返回头部').onClick(() => {
     myScroller.scrollEdge(Edge.Bottom)
@@ -1109,6 +1128,36 @@ function dewuAppItem() {
   .borderRadius(5)
   .width('100%')
   .justifyContent(FlexAlign.SpaceBetween)
+}
+
+/**
+ * 自定义组件写法
+ */
+@Component
+struct HelloComponent {
+  private color: Color = Color.Blue
+
+  build() {
+    Column({space:20}){
+      Row({space:20}) {
+        Image($r('app.media.cancel_icon'))
+          .width(20)
+        Text('姓名')
+        TextInput({placeholder:"请输入姓名"})
+          .layoutWeight(1)
+      }
+
+      Row({space:20}) {
+        Image($r('app.media.cancel_icon'))
+          .width(20)
+        Text('密码')
+        TextInput({placeholder:"请输入密码"})
+          .layoutWeight(1)
+      }
+    }
+    .padding(10)
+    .width('100%')
+  }
 }
 
 /**
