@@ -48,6 +48,18 @@
           ]
         }
       ]
+    },
+    {
+      "name": "juejin",
+      "srcPath": "./juejin",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
     }
   ]
 }

@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "module description"
+    },
+    {
+      "name": "JuejinAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "JuejinAbility_label",
+      "value": "label"
+    }
+  ]
+}

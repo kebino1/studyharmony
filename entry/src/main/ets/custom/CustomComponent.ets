@@ -1,3 +1,4 @@
+import { text } from '@kit.ArkGraphics2D'
 
 @Preview
 @Component
@@ -53,6 +54,10 @@ struct MyPanel {
   @Builder defaultBuilder() {
     Text("默认的UI实现")
   }
+  @BuilderParam bottomBuilder: () => void = this.bottomBuilder1
+  @Builder bottomBuilder1() {
+    Text("底部默认的UI实现")
+  }
 
   onclick = () => {}
 
@@ -72,6 +77,7 @@ struct MyPanel {
       .padding(10)
 
       this.customBuilder()
+      this.bottomBuilder()
     }
     .backgroundColor("#ffffff")
     .width('100%')
@@ -81,10 +87,22 @@ struct MyPanel {
   }
 }
 
-
 @Entry
 @Component
 struct Index{
+  @Builder customImpl() {
+    Column() {
+      Text("我升天了")
+    }
+  }
+
+  @Builder bottomImpl() {
+    Column() {
+      Image($r('app.media.app_icon'))
+        .width(50)
+    }
+  }
+
   build() {
     Column() {
       // topTitle()
@@ -99,13 +117,10 @@ struct Index{
         secondTitle:"全部订单",
         onclick: () =>{
           AlertDialog.show({message: "进入更多订单"})
-        }
-      }) {
-        //直接传递进来（尾随闭包）
-        Button("购物车").onClick((event: ClickEvent) => {
-
-        })
-      }
+        },
+        customBuilder: this.customImpl,
+        bottomBuilder: this.bottomImpl
+      })
 
       MyPanel({
         title:"小米优品众筹",
@@ -120,4 +135,8 @@ struct Index{
     .width('100%')
     .height("100%")
   }
+}
+
+function test() {
+  throw new Error('Function not implemented.')
 }

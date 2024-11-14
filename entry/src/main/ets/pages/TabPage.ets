@@ -1,4 +1,3 @@
-import { DEBUG } from 'BuildProfile';
 import { AxiosDemoPage } from './AxiosDemoPage';
 import { Index } from './Index';
 import { ListPage } from './ListPage';

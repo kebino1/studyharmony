@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "模块描述"
+    },
+    {
+      "name": "JuejinAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "JuejinAbility_label",
+      "value": "label"
+    }
+  ]
+}

@@ -10,11 +10,13 @@ interface Car {
 
 @Component
 struct myComponent {
+  //@Prop接收父组件传递的状态变量 父组件状态变量修改时 这里会跟着变化，子组件修改该状态变量时，父组件不会变化
   @Prop message: string = "儿子"
   @Prop num:number = 1
   //子组件提供一个箭头函数 供父类调用修改父类的状态变量
   onchange = (message: string) => {}
 
+  //@BuilderParam 传递UI 提供给父组件用来传递组件到子组件
   @BuilderParam titleBuilder: ()=>void = this.defaultTitle
   @BuilderParam contentBuilder: ()=>void = this.defaultContent
   @Builder defaultTitle() {
