@@ -1,28 +1,33 @@
+import { CommentData } from '../model/CommentData'
+
 @Component
 struct InfoItem {
+  @ObjectLink commentData: CommentData
+  onLikeClick = () => {}
+
   build() {
     Column() {
       Row({space:8}) {
-        Image($r('app.media.app_icon'))
+        Image(this.commentData.iconUrl)
           .width(30)
           .aspectRatio(1)
           .borderRadius(10)
 
-        Text('昵称')
+        Text(this.commentData.name)
           .fontSize(14)
           .fontColor(Color.Gray)
 
-        Image($r('app.media.ic_vip_card'))
+        Image($r(this.commentData.userLv))
           .width(18)
           .aspectRatio(1)
       }
-      Text('天子守国门，君王死社稷')
+      Text(this.commentData.commentContent)
         .fontSize(16)
         .fontColor(Color.Gray)
         .padding({left:40, top:10})
 
       Row() {
-        Text('7天前')
+        Text(this.commentData.timeDec)
           .fontSize(12)
           .fontColor(Color.Gray)
 
@@ -30,11 +35,15 @@ struct InfoItem {
           Image($r('app.media.ic_like'))
             .width(20)
             .aspectRatio(1)
+            .fillColor(this.commentData.isCollect ? '#ffe91212' : '#666666')
 
-          Text('99')
+          Text(this.commentData.collectCount.toString())
             .fontSize(12)
-            .fontColor(Color.Gray)
+            .fontColor(this.commentData.isCollect ? '#ffe91212' : '#666666')
         }.margin({right:5})
+        .onClick(() => {
+          this.onLikeClick()
+        })
       }
       .width('100%')
       .padding({left:40, top:5})
